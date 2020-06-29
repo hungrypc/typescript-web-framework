@@ -21,3 +21,8 @@ User class
 - fetch(): Promise
 - save(): Promise
 
+
+Using json-server
+```cli
+json-server -w db.json
+```
