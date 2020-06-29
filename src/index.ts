@@ -7,7 +7,11 @@ user.set({name: 'updated'})
 console.log(user.get('name'))
 
 user.on('change', () => {
-  
+  console.log('triggered')
+})
+user.on('change', () => {
+  console.log('triggered2')
 })
 
 console.log(user)
+user.trigger('change')
