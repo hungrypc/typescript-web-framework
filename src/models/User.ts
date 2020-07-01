@@ -8,7 +8,7 @@ interface UserProps {
 }
 
 export class User {
-  events: Eventing = new Eventing()
+  public events: Eventing = new Eventing()
 
   constructor(private data: UserProps) {}
 
