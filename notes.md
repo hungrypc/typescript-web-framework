@@ -128,3 +128,8 @@ export class Sync<T> {
   }
 }
 ```
+
+
+## Two Things to Understand
+1. In TS, strings can be types
+2. In JS (and therefore TS), all object keys are strings
