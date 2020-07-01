@@ -27,6 +27,8 @@ Using json-server
 json-server -w db.json
 ```
 
+## Composition
+
 ### 3 Methods to integrating Eventing class to User class
 1. Accept dependencies as a second constructor argument
 ```ts
@@ -40,6 +42,7 @@ export class User {
 
 new User({name: "sdflsda"}, new Eventing())
 ```
+However, it's cumbersome to constantly instantiate Eventing when instantiating a new User
 
 2. Only accept dependencies into constructor, define static class method to preconfigure User and assign properties afterwards
 ```ts
@@ -71,4 +74,57 @@ export class User {
 }
 
 new User({name: "sdflsda"})
+```
+
+### 3 Methods to integrating Sync class to User class
+1. Sync gets function arguments
+```ts
+export class Sync {
+  save(id: number, data: UserProps): void {
+    // ...
+  }
+
+  fetch(id: number): UserProps {
+    // ...
+  }
+}
+```
+However, Sync will now only work with User. We want this to be reusable for whatever else we make.
+
+2. Sync expects arguments that satisfies interfaces 'Serialize' and 'Deserialize'
+```ts
+interface Serializable {
+  serialize(): {}
+  // convert data from an object into some saveable format (json)
+}
+
+interface Deserializable {
+  deserialize(json: {}): void
+  // put data on an object using some previously saved data (json)
+}
+
+export class Sync {
+  save(id: number, serialize: Serializable): void {
+    // ...
+  }
+
+  fetch(id: number, deserial: Deserializable): void {
+    // ...
+  }
+}
+```
+Now with this, `serialize(): {}` allows us that flexibility we didn't have with the previous method.
+However, we can't specifically say what properties are going to be on there. That means we lose out on type safety. 
+
+3. Sync is a generic class to customize the type of 'data' coming into save()
+```ts
+export class Sync<T> {
+  save(id: number, data: T): AxiosPromise<T> {
+    // ...
+  }
+
+  fetch(id: number): AxiosPromise<T> {
+    // ...
+  }
+}
 ```
