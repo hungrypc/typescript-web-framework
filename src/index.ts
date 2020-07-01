@@ -2,9 +2,9 @@
 import { User } from './models/User'
 
 
-const user = new User({ name: 'new record', age: 0 })
+// const user = new User({ name: 'new record', age: 0 })
 
-user.save()
+// user.save()
 
 
 // axios.post('http://localhost:3000/users', {
