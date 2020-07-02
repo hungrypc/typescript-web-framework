@@ -197,3 +197,6 @@ user.on('change', () => {
   console.log('user was changed')
 })
 ```
+
+## Reminder on how 'this' works in JS
+Now that we've set up our passthrough methods, we run into another problem. Our 'this' in module methods aren't referencing itself, they're referencing the User class. That's not what we want. To solve this, we turn all module methods into arrow functions.
