@@ -48,4 +48,14 @@ export class User {
       this.set(res.data) // using our set, rather than attributes.set, to trigger change
     })
   }
+
+  save(): void {
+    this.sync.save(this.attributes.getAll())
+    .then((res: AxiosResponse): void => {
+      this.trigger('save')
+    })
+    .catch((err) => {
+      this.trigger('error')
+    })
+  }
 }

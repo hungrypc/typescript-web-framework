@@ -18,7 +18,7 @@ export class Sync<T extends hasId> {
   }
 
   save = (data: T): AxiosPromise<T> => {
-    const id = data
+    const { id } = data
     // const id = this.get('id')
     if (id) {      
       return axios.put(`${this.rootUrl}/${id}`, data)
