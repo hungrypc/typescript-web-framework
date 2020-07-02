@@ -10,7 +10,9 @@ user.on('change', () => {
   console.log('changed')
 })
 
-user.trigger('change')
+user.set({ name: 'newname'})
+
+console.log(user.get('name'))
 
 // user.events.on('change', () => {
 //   console.log('change!')
