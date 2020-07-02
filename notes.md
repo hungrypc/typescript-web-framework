@@ -133,3 +133,67 @@ export class Sync<T> {
 ## Two Things to Understand
 1. In TS, strings can be types
 2. In JS (and therefore TS), all object keys are strings
+
+
+## Composition is Delagation
+Because we've composed the User class out of 3 other classes, it can get cumbersome to access methods when they all depend on data that is accessed separately. To solve this, we'll implement some methods in the User class so that we can have all that needs to be done within the class rather than setting up on class calls.
+
+This is going to require:
+- direct passthrough of arguments
+- coordination between different modules within User
+
+a quick reminder on accessors:
+```ts
+class Person {
+  constructor(
+    public firstName: string, 
+    public lastName: string
+  ) {}
+
+  fullName(): string {
+    return `${this.firstName} ${this.lastName}`
+  }
+}
+
+const person = new Person('firstname', 'lastname')
+console.log(person.fullName())    // firstname lastname
+
+// we can set this up as a getter instead
+
+class Person {
+  constructor(
+    public firstName: string, 
+    public lastName: string
+  ) {}
+
+  // using get
+  get fullName(): string {
+    return `${this.firstName} ${this.lastName}`
+  }
+}
+
+console.log(person.fullName)
+```
+
+So with this, we can implement getters by assigning module functions to the getter (passthrough methods).
+
+```ts
+export class User {
+  public events: Eventing = new Eventing()
+  public sync: Sync<UserProps> = new Sync<UserProps>(rootUrl)
+  public attributes: Attributes<UserProps>
+  
+  constructor(attrs: UserProps) {
+    this.attributes = new Attributes<UserProps>(attrs)
+  }
+
+  // getting a reference to the on method on Eventing class
+  get on() {
+    return this.events.on
+  }
+}
+
+user.on('change', () => {
+  console.log('user was changed')
+})
+```
