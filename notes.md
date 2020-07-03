@@ -200,3 +200,17 @@ user.on('change', () => {
 
 ## Reminder on how 'this' works in JS
 Now that we've set up our passthrough methods, we run into another problem. Our 'this' in module methods aren't referencing itself, they're referencing the User class. That's not what we want. To solve this, we turn all module methods into arrow functions.
+
+## Composition vs Inheritance
+Now that we have our methods reimplemented into our User class, we have to talk about some of the problems that we still have.
+
+First big issue: a lot of nested properties (events, sync, attributes) are marked as public. We want other devs to go through the methods we've set up. 
+
+Next: these nested objects are hardcoded object references. The entire point of composition is that we should be able to swap out these different nested properties to create new different functionality. 
+
+Lastly: the type for each of these properties are implementations (classes). Ideally, we want them to be interfaces.
+
+We're trying to create a framework here, we want to create some reusable elements that can be used to create wildly different apps. 
+
+One thing we can do is use inheritance.
+
