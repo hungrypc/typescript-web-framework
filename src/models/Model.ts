@@ -27,18 +27,20 @@ export class Model<T extends HasId> {
     private sync: Sync<T>
   ) { }
 
+  on = this.events.on
+  // get on() {
+  //   return this.events.on
+  // }
+  
+  trigger = this.events.trigger
+  // get trigger() {
+  //   return this.events.trigger
+  // }
 
-  get on() {
-    return this.events.on
-  }
-
-  get trigger() {
-    return this.events.trigger
-  }
-
-  get get() {
-    return this.attributes.get
-  }
+  get = this.attributes.get
+  // get get() {
+  //   return this.attributes.get
+  // }
 
   set(update: T): void {
     this.attributes.set(update)
