@@ -214,3 +214,13 @@ We're trying to create a framework here, we want to create some reusable element
 
 One thing we can do is use inheritance.
 
+
+## View Classes
+To display on html, we're going to have one class UserEdit that will house two other classes: UserShow and UserForm.
+- Each view **must** produce HTML
+- We should be able to nest one view's HTML in another
+- we need to have a good way to handle user events (clicking, typing, etc)
+- There will probably be a tight coupling between a view and a model
+- We need to be able to reach into the HTML produced by a view and get a specific element
+
+
