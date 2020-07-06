@@ -257,9 +257,26 @@ export class UserForm {
     `
   }
 
+  bindEvents(fragment: DocumentFragment): void {
+    const eventsMap = this.eventsMap()
+
+    for (let eventKey in eventsMap) {
+      const [eventName, selector] = eventKey.split(':')
+
+      fragment.querySelectorAll(selector) // returns array that matches selector
+      .forEach(element => {
+        element.addEventListener(eventName, eventsMap[eventKey])
+      })
+    }
+  }
+
   render(): void {
     const templateElement = document.createElement('template')
     templateElement.innerHTML = this.template()  // turns string into HTML
+
+    this.bindEvents(templateElement.content)
+    // this content is a reference to a 'Document Fragment'
+    // its purpose is to hold HTML in its memory before it gets attached to the DOM
 
     this.parent.append(templateElement.content)
   }
