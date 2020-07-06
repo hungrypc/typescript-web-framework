@@ -223,4 +223,45 @@ To display on html, we're going to have one class UserEdit that will house two o
 - There will probably be a tight coupling between a view and a model
 - We need to be able to reach into the HTML produced by a view and get a specific element
 
+## Rendering Timeline
+1. Call 'render' method
+2. Render calls 'template', gets HTML string
+3. Render inserts HTML string into a template element
+4. We should somehow bind event handlers to the HTML in there
+5. Render inserts content of template into DOM
 
+You might ask, why not `onClick={clickHandler}`? It's hard to implement. We'd have to create a parser. Instead, we're going to do this:
+```ts
+export class UserForm {
+  constructor(public parent: Element) {}
+
+  eventsMap(): { [key: string]: () => void } {
+    return {
+      'click:button': this.onButtonClick, 
+      // setting a click event handler to onButtonClick
+      // more examples: 'hover:h1': this.onHoverHeader,
+    }
+  }
+
+  onButtonClick(): void {
+    console.log('hi')
+  }
+
+  template(): string {
+    return `
+      <div>
+        <h1>User Form</h1>
+        <input />
+        <button>Click Me</button>
+      </div>
+    `
+  }
+
+  render(): void {
+    const templateElement = document.createElement('template')
+    templateElement.innerHTML = this.template()  // turns string into HTML
+
+    this.parent.append(templateElement.content)
+  }
+}
+```
