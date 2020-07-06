@@ -282,3 +282,10 @@ export class UserForm {
   }
 }
 ```
+
+
+## Binding Events on Class Name
+What if we have multiple elements that we want to do different things (like multiple buttons)? Instead of selecting by element, we select based on class name.
+
+There's nothing we really have to change, `querySelectorAll()` actually already selects by the class if you feed it a class.
+
