@@ -1,7 +1,9 @@
 import { User } from '../models/User'
 
 export class UserForm {
-  constructor(public parent: Element, public model: User) {}
+  constructor(public parent: Element, public model: User) {
+    this.bindModel()
+  }
 
   eventsMap(): { [key: string]: () => void } {
     return {
@@ -10,12 +12,15 @@ export class UserForm {
     }
   }
 
-  // onButtonClick(): void {
-  //   console.log('hi')
-  // }
+  bindModel(): void {
+    this.model.on('change', () => {
+      this.render()
+    })
+  }
 
   onSetAgeClick = (): void => {
     this.model.setRandomAge()
+    // need to rerender on update
   }
 
   template(): string {
@@ -44,6 +49,9 @@ export class UserForm {
   }
 
   render(): void {
+    // empty parent element before appending again
+    this.parent.innerHTML = ''
+
     const templateElement = document.createElement('template')
     templateElement.innerHTML = this.template()  // turns string into HTML
 
