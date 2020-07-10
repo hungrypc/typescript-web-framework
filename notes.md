@@ -282,10 +282,15 @@ export class UserForm {
   }
 }
 ```
-
+s
 
 ## Binding Events on Class Name
 What if we have multiple elements that we want to do different things (like multiple buttons)? Instead of selecting by element, we select based on class name.
 
 There's nothing we really have to change, `querySelectorAll()` actually already selects by the class if you feed it a class.
 
+## Reusable View Logic
+Maybe, instead of haviing UserForm render html, we can have an HtmlRenderer class.
+However, with the composition approach, there is an issue. The two classes will have a bidirectional relationship, where they reference each other. From this, composition may not be the best idea. Instead, maybe we should use inheritance. 
+
+With inheritance, we could make a class View. We should make it an abstract class (only ever be used to extend another). This would allow us to add some abstract methods to its definition. 
