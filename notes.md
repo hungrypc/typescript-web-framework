@@ -282,7 +282,7 @@ export class UserForm {
   }
 }
 ```
-s
+
 
 ## Binding Events on Class Name
 What if we have multiple elements that we want to do different things (like multiple buttons)? Instead of selecting by element, we select based on class name.
@@ -294,3 +294,17 @@ Maybe, instead of haviing UserForm render html, we can have an HtmlRenderer clas
 However, with the composition approach, there is an issue. The two classes will have a bidirectional relationship, where they reference each other. From this, composition may not be the best idea. Instead, maybe we should use inheritance. 
 
 With inheritance, we could make a class View. We should make it an abstract class (only ever be used to extend another). This would allow us to add some abstract methods to its definition. 
+
+```ts
+export abstract class View<T extends Model<K>, K> {
+  // ...
+}
+
+export class UserForm extends View<User, UserProps> {
+  // ...
+}
+```
+
+This looks nasty as fuck, but we're going through these hoops because now, inside of UserForm, ts understands that `this.model` is going to refer to an instance of a User AND the different properties that User is going to have - it understand that its going to have the set of properties of UserProps.
+
+This means that anywhere inside of our class, we can refer to `this.model` and ts will be aware of what it returns. It knows this because we passed in UserProps.
