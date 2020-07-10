@@ -53,7 +53,7 @@ export class Model<T extends HasId> {
       throw new Error('cannot fetch without id')
     }
 
-    this.sync.fetch(id).then((res: AxiosResponse): void => {
+    this.sync.fetch(id!).then((res: AxiosResponse): void => {
       this.set(res.data) // using our set, rather than attributes.set, to trigger change
     })
   }
