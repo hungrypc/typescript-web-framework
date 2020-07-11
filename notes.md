@@ -308,3 +308,8 @@ export class UserForm extends View<User, UserProps> {
 This looks nasty as fuck, but we're going through these hoops because now, inside of UserForm, ts understands that `this.model` is going to refer to an instance of a User AND the different properties that User is going to have - it understand that its going to have the set of properties of UserProps.
 
 This means that anywhere inside of our class, we can refer to `this.model` and ts will be aware of what it returns. It knows this because we passed in UserProps.
+
+
+<h1>User Form</h1>
+<div>User name: ${this.model.get('name')}</div>
+        <div>User age: ${this.model.get('age')}</div>
