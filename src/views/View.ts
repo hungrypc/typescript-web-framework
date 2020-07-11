@@ -47,6 +47,10 @@ export abstract class View<T extends Model<K>, K> {
     }
   }
 
+  onRender(): void {
+    
+  }
+
   render(): void {
     // empty parent element before appending again
     this.parent.innerHTML = ''
@@ -56,6 +60,9 @@ export abstract class View<T extends Model<K>, K> {
 
     this.bindEvents(templateElement.content)
     this.mapRegions(templateElement.content)
+
+    // view nesting
+    this.onRender();
 
     this.parent.append(templateElement.content)
   }
