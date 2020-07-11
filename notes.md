@@ -310,6 +310,9 @@ This looks nasty as fuck, but we're going through these hoops because now, insid
 This means that anywhere inside of our class, we can refer to `this.model` and ts will be aware of what it returns. It knows this because we passed in UserProps.
 
 
-<h1>User Form</h1>
-<div>User name: ${this.model.get('name')}</div>
-        <div>User age: ${this.model.get('age')}</div>
+## Nesting with Regions
+We're going to add a method and property to class View:
+1. regionMap()
+2. regions: {}
+
+`regionMap()` is going to be very similar to the `eventsMap()` that we already have in View. Remember, class View is a method that can be implemented by some developer when we extend View. The purpose of `eventsMap()` is to somehow provide a collection of different events that we want to watch for inside of the template produced by the given view. So this is an optional method that is giving some info to class View to process. We're going to do the same with `regionMap()`. So our developers who're going to use our framework are going to implement `regionMap()`, which is going to return an onject that has some key-value pairs where the keys are what we're going to refer to as regions. The key will be the region name, the value is going to be a selector to find some element inside the current template. 
